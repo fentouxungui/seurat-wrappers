@@ -143,12 +143,12 @@ scVIIntegration <- function(
     # in case of error caused by reticulate for trans length 1 vector
     continuous.vars.to.regress <- ifelse(length(continuous.vars.to.regress) == 1, list(continuous.vars.to.regress), continuous.vars.to.regress)
     scvi$model$SCVI$setup_anndata(adata, batch_key = "batch",
-                                  continuous_covariate_keys = continuous.vars.to.regress)
+                                  continuous_covariate_keys = reticulate::r_to_py(as.list(continuous.vars.to.regress))
   }else{
     # in case of error caused by reticulate for trans length 1 vector
     continuous.vars.to.regress <- ifelse(length(continuous.vars.to.regress) == 1, list(continuous.vars.to.regress), continuous.vars.to.regress)
     scvi$model$SCVI$setup_anndata(adata, categorical_covariate_keys = c('batch',categorical.vars.to.regress),
-                                  continuous_covariate_keys = continuous.vars.to.regress)
+                                  continuous_covariate_keys = reticulate::r_to_py(as.list(continuous.vars.to.regress))
   }
 
   # initialize and train the model
